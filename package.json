@@ -1,0 +1,28 @@
+{
+  "name": "281component3",
+  "version": "1.0.0",
+  "description": "Component 3 of Project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/midNight-jam/Component_3_281.git"
+  },
+  "keywords": [
+    "281"
+  ],
+  "author": "Jayam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/midNight-jam/Component_3_281/issues"
+  },
+  "homepage": "https://github.com/midNight-jam/Component_3_281#readme",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "http": "0.0.0",
+    "routes": "^2.1.0"
+  }
+}
