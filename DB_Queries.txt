@@ -1,0 +1,16 @@
+create table Managers_1 ( mid INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, email VARCHAR(30) NOT NULL, password VARCHAR (30) NOT NULL, type VARCHAR(3) DEFAULT 'M', archive VARCHAR(3) DEFAULT 'N');
+
+
+
+
+create table Project_2 (pid INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, title VARCHAR(30) NOT NULL, description VARCHAR (300), creation_date DATE, dead_date DATE, manager_id INT(6) REFERENCES Manager_1 (mid), status VARCHAR(30), archive VARCHAR(3) DEFAULT 'N');
+
+create table Tags_3 (tid INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, tag_name VARCHAR(30) NOT NULL);
+
+
+CREATE TABLE Project_Tags_Map_4 (pid INT(6) REFERENCES Project_2 (pid), tid INT(6) REFERENCES Tags_3 (tid));
+
+
+create table Test_5 (test_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, case_name VARCHAR(30) NOT NULL);
+
+create table Project_Test_Map_6(pid INT(6) REFERENCES Project_2 (pid), testid INT(6) REFERENCES Test_5 (test_id));
