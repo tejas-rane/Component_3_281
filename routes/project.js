@@ -10,7 +10,6 @@ var connection = mysql.createConnection({
 });
 
 getAllProjects = function(req, res){
-
   // connect to database
   connection.connect(function (err) {
     if(err){
@@ -23,7 +22,6 @@ getAllProjects = function(req, res){
     // use below fucntion to execute query
     connection.query(query, function (err, rows) {
       if(err){
-
         console.log('Couldnt execute Query : '+ query);
         console.log(err);
         return;
@@ -34,20 +32,54 @@ getAllProjects = function(req, res){
   });
 };
 
+
+/*
+*   Smaple POST Request for adding project
+*   {
+     "title" : "valtitle",
+     "description": "This is aFirst  Project ",
+     "creation_date": "2017-05-03",
+     "dead_date": "2027-05-03",
+     "manager_id": 1,
+     "status": "A",
+     "archive": "N"
+   }
+* */
 addProject = function(req, res) {
-  console.log('title : ' + req.body.title);
   // extract project values from the request to save
   var project = {
     title: req.body.title,
-    desc: req.body.desc
+    description: req.body.desc,
+    creation_date: req.body.creation_date,
+    dead_date: req.body.dead_date,
+    manager_id: req.body.manager_id,
+    status: req.body.manager_id
   };
 
   // to get a string representation of the project, helpful for debugging
   projStr = JSON.stringify(project)
   console.log('Rece Proj : ' + projStr);
 
-  // 200 to send OK , 201 to send Created
-  res.send(200);
+
+  connection.connect(function (err) {
+    if(err){
+      console.log('Couldnt Connect to DB');
+      console.log(err);
+      return;
+    }
+    var query = "insert into Project_2 SET ?"; // prepare query
+
+    // use below fucntion to execute insert query
+    connection.query(query, project, function (err, rows) {
+      if(err){
+        console.log('Couldnt execute Query : '+ query);
+        console.log(err);
+        return;
+      }
+      console.log('Query Successfully executed : '+query);
+      res.sendStatus(201); // send back the projects
+    });
+  });
 };
 
 exports.addProject = addProject;

@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/',routes.index);
 app.set('views',__dirname + '/views');
 app.set('view engine','ejs');
+
 app.get('/projects', projects.getAllProjects)
 app.post('/projects', projects.addProject)
 
