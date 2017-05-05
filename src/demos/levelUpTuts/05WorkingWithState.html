@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>React - Template</title>
+    <script src="../../js/react.js"></script>
+    <script src="../../js/react-dom.min.js"></script>
+    <script src="../../js/browser.min.js"></script>
+</head>
+<body>
+
+<div id="app"></div>
+<script type="text/babel">
+    var Hello = React.createClass({
+
+        propTypes: {
+            name: React.PropTypes.string,
+            isPerson: React.PropTypes.bool
+        },
+
+        getDefaultProps: function () {
+            return {
+                name: 'Scott' /*if u remv name=tim, it wll prnt Scott*/
+            }
+        },
+
+        getInitialState: function () {
+            return {
+                value: 1
+            }
+        },
+
+        componentDidMount: function () {
+            this.setState({
+                value: this.state.value + 19
+            });
+        },
+
+        render: function () {
+            var greeting = "World";
+
+            if(this.props.isPerson){
+                greeting = (<Person name={this.props.name} />)
+            }
+            return (
+                    <div>
+                        <h1> Hello {greeting}</h1>
+                        {this.state.value}
+                    </div>
+            )
+        }
+    });
+
+    var Person = React.createClass({
+
+        propTypes: {
+            name: React.PropTypes.string.isRequired/*name prop is required now*/
+        },
+
+        getDefaultProps: function () {
+            return {
+                name: 'Scott' /*if u remv name=tim, it wll prnt Scott*/
+            }
+        },
+        render: function () {
+            return (
+                    <span>{this.props.name}</span>
+            )
+        }
+    });
+    ReactDOM.render(
+            <Hello name="Harsh" isPerson={true} />,
+        document.getElementById('app')
+    );
+</script>
+</body>
+</html>

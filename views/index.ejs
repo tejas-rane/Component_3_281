@@ -1,21 +1,560 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--<meta charset="UTF-8" />-->
+<!--<title>Hello World</title>-->
+<!--<script src="https://unpkg.com/react@latest/dist/react.js"></script>-->
+<!--<script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>-->
+<!--<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div id="root"></div>-->
+<!--<script type="text/babel">-->
+
+<!--ReactDOM.render(-->
+<!--<h1>Hello, world! This is CMPE 281 Project index </h1>,-->
+<!--document.getElementById('root')-->
+<!--);-->
+
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!--NEW-->
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
-    <title>Hello World</title>
-    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>React - Template</title>
+    <!--<link rel="stylesheet" type="text/css" href="/css/main.css">-->
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/react.js"></script>
+    <script src="/js/react-dom.min.js"></script>
+    <script src="/js/browser.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.6/lodash.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <!--<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
 </head>
 <body>
-<div id="root"></div>
+<header>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"><h1>CMPE 281</h1></a>
+            </div><!-- navbar-header -->
+        </div><!-- container -->
+    </nav>
+</header>
+<!--<div id="newContainer">
+    &lt;!&ndash; This element's contents will be replaced with your component. &ndash;&gt;
+</div>
+<script type="text/babel">
+    var ProductCategoryRow = React.createClass({
+        render: function() {
+            return (<tr><th colSpan="2">{this.props.category}</th></tr>);
+        }
+    });
+
+    var ProductRow = React.createClass({
+        render: function() {
+            var name = this.props.product.stocked ?
+                this.props.product.name :
+                    <span style={{color: 'red'}}>
+        {this.props.product.name}
+      </span>;
+            return (
+                    <tr>
+                        <td>{name}</td>
+                        <td>{this.props.product.price}</td>
+                    </tr>
+            );
+        }
+    });
+
+    var ProductTable = React.createClass({
+        render: function() {
+            var rows = [];
+            var lastCategory = null;
+            this.props.products.forEach(function(product) {
+                if (product.name.indexOf(this.props.filterText) === -1 || (!product.stocked && this.props.inStockOnly)) {
+                    return;
+                }
+                if (product.category !== lastCategory) {
+                    rows.push(<ProductCategoryRow category={product.category} key={product.category} />);
+                }
+                rows.push(<ProductRow product={product} key={product.name} />);
+                lastCategory = product.category;
+            }.bind(this));
+            return (
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                        </tr>
+                        </thead>
+                        <tbody>{rows}</tbody>
+                    </table>
+            );
+        }
+    });
+
+    var SearchBar = React.createClass({
+        handleChange: function() {
+            this.props.onUserInput(
+                this.refs.filterTextInput.value,
+                this.refs.inStockOnlyInput.checked
+            );
+        },
+        render: function() {
+            return (
+                    <form>
+                        <input
+                                type="text"
+                                placeholder="Search..."
+                                value={this.props.filterText}
+                                ref="filterTextInput"
+                                onChange={this.handleChange}
+                        />
+                        <p>
+                            <input
+                                    type="checkbox"
+                                    checked={this.props.inStockOnly}
+                                    ref="inStockOnlyInput"
+                                    onChange={this.handleChange}
+                            />
+                            {' '}
+                            Only show products in stock
+                        </p>
+                    </form>
+            );
+        }
+    });
+
+    var FilterableProductTable = React.createClass({
+        getInitialState: function() {
+            return {
+                filterText: '',
+                inStockOnly: false
+            };
+        },
+
+        handleUserInput: function(filterText, inStockOnly) {
+            this.setState({
+                filterText: filterText,
+                inStockOnly: inStockOnly
+            });
+        },
+
+        render: function() {
+            return (
+                    <div>
+                        <SearchBar
+                                filterText={this.state.filterText}
+                                inStockOnly={this.state.inStockOnly}
+                                onUserInput={this.handleUserInput}
+                        />
+                        <ProductTable
+                                products={this.props.products}
+                                filterText={this.state.filterText}
+                                inStockOnly={this.state.inStockOnly}
+                        />
+                    </div>
+            );
+        }
+    });
+
+
+    var PRODUCTS = [
+        {category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football'},
+        {category: 'Sporting Goods', price: '$9.99', stocked: true, name: 'Baseball'},
+        {category: 'Sporting Goods', price: '$29.99', stocked: false, name: 'Basketball'},
+        {category: 'Electronics', price: '$99.99', stocked: true, name: 'iPod Touch'},
+        {category: 'Electronics', price: '$399.99', stocked: false, name: 'iPhone 5'},
+        {category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7'}
+    ];
+
+    ReactDOM.render(
+            <FilterableProductTable products={PRODUCTS} />,
+        document.getElementById('newContainer')
+    );
+</script>
+
+<div id="container"></div>
 <script type="text/babel">
 
-  ReactDOM.render(
-          <h1>Hello, world! This is CMPE 281 Project index </h1>,
-    document.getElementById('root')
-  );
+    var Comment = React.createClass({
+        getInitialState: function () {
+            return{editing: false}
+        },
+        edit: function () {
+            this.setState({editing: true});
+        },
+        remove: function () {
+            console.log('Removing Comment');
+            this.props.deleteFromBoard(this.props.index)
+        },
+        save: function () {
+            this.props.updateCommentText(this.refs.newText.value, this.props.index)
+            this.setState({editing: false});
+        },
 
-</script>
+        renderNormal: function () {
+            return(
+                    <div className="commentContainer">
+                        <div className="commentText">{this.props.children}</div>
+                        <button onClick={this.edit} className="button-primary">Edit</button>
+                        <button onClick={this.remove} className="button-danger">Remove</button>
+                    </div>
+            );
+        },
+        renderForm: function () {
+            return(
+                    <div className="commentContainer">
+                        <textarea ref="newText" defaultValue={this.props.children}></textarea>
+                        <button onClick={this.save} className="button-success">Save</button>
+                    </div>
+            );
+        },
+
+        render: function () {
+            if(this.state.editing){
+                return this.renderForm();
+            }else{
+                return this.renderNormal();
+            }
+        }
+    });
+
+    var Board = React.createClass({
+
+        getInitialState: function () {
+            return{
+                comments:[]
+            }
+        },
+        add: function (text) {
+            var arr = this.state.comments;
+            arr.push(text);
+            this.setState({comments: arr})
+        },
+        removeComment: function (i) {
+            console.log('Removing comment: '+ i );
+            var arr = this.state.comments;
+            arr.splice(i, 1);
+            this.setState({comments: arr})
+        },
+        updateComment: function (newText, i) {
+            console.log('Updated Comment');
+            var arr = this.state.comments;
+            arr[i] = newText;
+            this.setState({comments: arr})
+        },
+        eachComment: function (text, i) {
+            return (
+                    <Comment key={i} index={i} updateCommentText={this.updateComment} deleteFromBoard={this.removeComment}>
+                        {text}
+                    </Comment>
+            );
+        },
+        render: function () {
+            return(
+                    <div>
+                        <button onClick={this.add.bind(null, 'Default text')} className="button-info create">Add New</button>
+                        <div className="board">
+                            {this.state.comments.map(this.eachComment)}
+                        </div>
+                    </div>
+            );
+        }
+
+    });
+
+    ReactDOM.render(<Board />,
+        document.getElementById('container'));
+</script>-->
+<div class="main">
+    <div class="page" id="petratings">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="petAppointments"></div>
+                    <script type="text/babel">
+                        var MainInterface = React.createClass({
+                            getInitialState: function() {
+                                return {
+                                    aptBodyVisible: false,
+                                    orderBy: 'petName',
+                                    orderDir: 'asc',
+                                    queryText: '',
+                                    myData: []
+                                }
+                            },
+                            componentDidMount: function() {
+                                this.serverRequest = $.get('/json/data.json', function(result) {
+                                    var tempApts = result;
+                                    this.setState({
+                                        myData: tempApts
+                                    });//setState
+                                }.bind(this));
+                            },
+                            componentWillUnmount: function () {
+                                this.serverRequest.abort();
+                            },
+                            deleteMessage: function (item) {
+                                var allApts = this.state.myData;
+                                var newApts = _.without(allApts, item);
+                                this.setState({
+                                    myData: newApts
+                                });
+                            },//deleteMessage
+                            toggleAddDisplay: function () {
+                                var tempVisibility = !this.state.aptBodyVisible;
+                                this.setState({
+                                    aptBodyVisible: tempVisibility
+                                });//setState
+                            },//toggleAddDisplay
+                            addItem: function (tempItem) {
+                                var tempApts = this.state.myData;
+                                tempApts.push(tempItem);
+                                this.setState({
+                                    myData: tempApts
+                                });//setState
+                            },//addItem
+
+                            reOrder: function (orderBy, orderDir) {
+                                this.setState({
+                                    orderBy: orderBy,
+                                    orderDir: orderDir
+                                });//setState
+                            },
+                            searchApts(q){
+                                this.setState({
+                                    queryText: q
+                                });
+                            },//SearchApts
+
+                            render: function() {
+//                                        var filteredApts = this.state.myData;
+                                var filteredApts = [];
+                                var orderBy = this.state.orderBy;
+                                var orderDir = this.state.orderDir;
+                                var queryText = this.state.queryText;
+                                var myData = this.state.myData;
+
+                                myData.forEach(function (item) {
+                                    if(
+                                        (item.petName.toLowerCase().indexOf(queryText)!= -1) ||
+                                        (item.ownerName.toLowerCase().indexOf(queryText)!= -1) ||
+                                        (item.aptDate.toLowerCase().indexOf(queryText)!= -1) ||
+                                        (item.aptNotes.toLowerCase().indexOf(queryText)!= -1)
+                                    ){
+                                        filteredApts.push(item);
+                                    }
+                                });
+
+                                filteredApts = _.orderBy(filteredApts, function(item) {
+                                    return item[orderBy].toLowerCase();
+                                },orderDir);//orderBy
+
+                                filteredApts = filteredApts.map(function(item, index) {
+                                    return(
+                                            <AptList key = { index }
+                                                     singleItem = { item }
+                                                     whichItem = { item }
+                                                     onDelete = { this.deleteMessage } />
+
+                                    )//return
+                                }.bind(this));//filteredApts.map
+                                return (
+                                        <div className="interface">
+                                            <AddAppointment
+                                                    bodyVisible = { this.state.aptBodyVisible }
+                                                    handleToggle = { this.toggleAddDisplay }
+                                                    addApt = { this.addItem }
+                                            />
+                                            <SearchAppointments
+                                                    orderBy = {this.state.orderBy}
+                                                    orderDir = {this.state.orderDir}
+                                                    onReOrder = {this.reOrder}
+                                                    onSearch = {this.searchApts}
+                                            />
+                                            <ul className="item-list media-list">
+                                                {filteredApts}
+                                            </ul>
+                                        </div>
+                                )//return
+                            }//render
+                        });//MainInterface
+                        var AptList = React.createClass({
+                            handleDelete: function () {
+                                this.props.onDelete(this.props.whichItem)
+                            },
+
+                            render: function() {
+                                return(
+                                        <li className="pet-item media">
+                                            <div className="media-left">
+                                                <button className="pet-delete btn btn-xs
+                                                        btn-danger" onClick={this.handleDelete}>
+                                                        <span className="glyphicon glyphicon-remove">
+
+                                                        </span>
+
+                                                </button>
+                                            </div>
+                                            <div className="pet-info media-body">
+                                                <div className="pet-head">
+                                                    <span className="pet-name">{this.props.singleItem.petName}</span>
+                                                    <span className="apt-date pull-right">{this.props.singleItem.aptDate}</span>
+                                                </div>
+                                                <div className="owner-name">
+                                                    <span className="label-item">Owner:</span>
+                                                    {this.props.singleItem.ownerName}
+                                                </div>
+                                                <div className="owner-name">
+                                                    <span className="label-item">Project Github URL:</span>
+                                                    {this.props.singleItem.url}
+                                                </div>
+                                                <div className="apt-notes">{this.props.singleItem.aptNotes}
+                                                </div>
+                                            </div>
+                                        </li>
+                                )//return
+                            }//render
+                        });//AptList
+                        var AddAppointment = React.createClass({
+                            toggleAptDisplay: function () {
+                                this.props.handleToggle();
+                            },
+                            handleAdd: function (e) {
+                                var tempItem = {
+                                    petName: this.refs.inputPetName.value,
+                                    ownerName: this.refs.inputOwnerName.value,
+                                    url: this.refs.inputURL.value,
+                                    aptDate: this.refs.inputAptDate.value + ' ' + this.refs.inputAptTime.value,
+                                    aptNotes: this.refs.inputAptNotes.value
+                                }//tempItem
+                                e.preventDefault();
+                                this.props.addApt(tempItem);
+                            },//handleAdd
+                            render: function () {
+
+                                var displayAptBody = {
+                                    display: this.props.bodyVisible ? 'block': 'none'
+                                }
+                                return(
+                                        <div className="panel panel-primary">
+                                            <div className="panel-heading apt-addheading" onClick={ this.toggleAptDisplay }>
+                                                <span className="glyphicon glyphicon-plus"></span> Add Project
+                                            </div>
+                                            <div className="panel-body" style={ displayAptBody }>
+                                                <form className="add-appointment form-horizontal" onSubmit= { this.handleAdd }>
+                                                    <div className="form-group">
+                                                        <label className="col-sm-2 control-label" for="petName">Project Name</label>
+                                                        <div className="col-sm-10">
+                                                            <input type="text" className="form-control"
+                                                                   id="petName" ref="inputPetName" placeholder="Project Name"/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label className="col-sm-2 control-label" for="petOwner">Owner</label>
+                                                        <div className="col-sm-10">
+                                                            <input type="text" className="form-control"
+                                                                   id="petOwner" ref="inputOwnerName" placeholder="Owner's Name"/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label className="col-sm-2 control-label" for="petOwner">Project GitHub URL</label>
+                                                        <div className="col-sm-10">
+                                                            <input type="text" className="form-control"
+                                                                   id="url" ref="inputURL" placeholder="URL"/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label className="col-sm-2 control-label" for="aptDate">Date</label>
+                                                        <div className="col-sm-4">
+                                                            <input type="date" className="form-control"
+                                                                   id="aptDate" ref="inputAptDate"/>
+                                                        </div>
+                                                        <label className="col-sm-2 control-label" for="aptTime">Time</label>
+                                                        <div className="col-sm-4">
+                                                            <input type="time" className="form-control"
+                                                                   id="aptTime" ref="inputAptTime"/>
+                                                        </div>
+
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label className="col-sm-2 control-label" for="aptNotes">Notes</label>
+                                                        <div className="col-sm-10">
+                                                                <textarea className="form-control" rows="4" cols="50"
+                                                                          id="aptNotes" ref="inputAptNotes" placeholder="Notes">
+
+                                                                </textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <div className="col-sm-offset-2 col-sm-10" >
+                                                            <button type="submit" className="btn btn-primary pull-right">Add Project</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                )//return
+                            }//render
+                        });//AddAppointment
+                        var SearchAppointments = React.createClass({
+                            handleSort: function (e) {
+                                this.props.onReOrder(e.target.id, this.props.orderDir);
+                            },//handleSort
+                            handleOrder: function (e) {
+                                this.props.onReOrder(this.props.orderBy, e.target.id);
+                            },//handleOrder
+                            handleSearch: function (e) {
+                                this.props.onSearch(e.target.value);
+
+                            },
+                            render: function () {
+                                return(
+                                        <div className="row search-appointments">
+                                            <div className="col-sm-offset-3 col-sm-6">
+                                                <div className="input-group">
+                                                    <input id="SearchApts" onChange={this.handleSearch} placeholder="Search" type="text" className="form-control" aria-label="Search Appointments" />
+                                                    <div className="input-group-btn">
+                                                        <button type="button" className="btn btn-primary dropdown-toggle"
+                                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by: <span className="caret"></span></button>
+                                                        <ul className="dropdown-menu dropdown-menu-right">
+                                                            <li><a href="#" id="petName" onClick={ this.handleSort }>Project Name{ (this.props.orderBy === 'petName') ? <span className="glyphicon glyphicon-ok"></span>: null} </a></li>
+                                                            <li><a href="#" id="aptDate" onClick={ this.handleSort }>Date { (this.props.orderBy === 'aptDate') ? <span className="glyphicon glyphicon-ok"></span>: null}</a></li>
+                                                            <li><a href="#" id="ownerName" onClick={ this.handleSort }>Owner { (this.props.orderBy === 'ownerName') ? <span className="glyphicon glyphicon-ok"></span>: null }</a></li>
+                                                            <li role="separator" className="divider"></li>
+                                                            <li><a href="#" id="asc" onClick={ this.handleOrder }>Asc { (this.props.orderDir === 'asc') ? <span className="glyphicon glyphicon-ok"></span>: null } </a></li>
+                                                            <li><a href="#" id="desc" onClick={ this.handleOrder }>Desc { (this.props.orderDir === 'desc') ? <span className="glyphicon glyphicon-ok"></span>: null }</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                )//return
+                            }//render
+                        });//SearchAppointments
+
+                        ReactDOM.render(
+                                <MainInterface />,document.getElementById('petAppointments')
+                        )
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
+
