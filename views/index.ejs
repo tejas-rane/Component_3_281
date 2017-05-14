@@ -303,6 +303,16 @@
                                         myData: tempApts
                                     });//setState
                                 }.bind(this));
+
+                              this.serverRequest = $.get('http://localhost:3000/projects', function(result) {
+                                var tempApts = result;
+                                console.log('In hanlder of request ... ');
+                                console.log(result);
+//                                this.setState({
+//                                  myData: tempApts
+//                                });//setState
+                              }.bind(this));
+
                             },
                             componentWillUnmount: function () {
                                 this.serverRequest.abort();
