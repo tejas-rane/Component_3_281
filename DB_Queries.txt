@@ -29,3 +29,17 @@ insert into Project_2 (title,description, creation_date, dead_date, manager_id, 
 
 Add Project_Monitoring :
 insert into Project_Monitoring (pid,event, event_date) values (1,'mangaer ABC was Added as contributor ', '2017-05-03');
+
+Add Project_Monitoring :
+insert into Project_Monitoring (pid, event, event_date) values (1,'mangaer ABC was Added as contributor ', '2017-05-03');
+
+
+Add Tags:
+insert into Tags_3 (tag_name) values ('Web');
+
+
+Add Project_Tags_Map_4:
+insert into Project_Tags_Map_4 (pid, tid) values (1,1);
+
+Select Project_tags:
+select  b.tag_name from Project_Tags_Map_4 a, Tags_3 b where a.tid = b.tid and a.pid = 2

@@ -121,9 +121,26 @@ getProjectMonitoring = function(req, res){
 };
 
 
+getProjectTags = function(req, res){
+  var pid = req.body.pid;
+  //select  b.tag_name from Project_Tags_Map_4 a, Tags_3 b where a.tid = b.tid and a.pid = 2
+  var query = 'select b.tag_name from Project_Tags_Map_4 a, Tags_3 b where a.tid = b.tid and a.pid = "' + pid + '" ';
+  mysql.fetchQuery(query, function (err, rows) {
+    if(err){
+      console.log('Couldnt execute Query : '+ query);
+      console.log(err);
+      return;
+    }
+    console.log('Query Successfully executed : '+query+' , Row count : '+rows.length);
+    res.send(rows);
+  });
+};
+
 exports.addProject = addProject;
 exports.getAllProjects = getAllProjects;
 exports.getProject = getProject;
 exports.updateProject = updateProject;
 exports.getProjectMonitoring = getProjectMonitoring;
+exports.getProjectTags = getProjectTags;
+
 
