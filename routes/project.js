@@ -33,7 +33,7 @@ addProject = function(req, res) {
   // extract project values from the request to save
   var project = {
     title: req.body.title,
-    description: req.body.desc,
+    description: req.body.description,
     creation_date: req.body.creation_date,
     dead_date: req.body.dead_date,
     manager_id: req.body.manager_id,
@@ -74,6 +74,40 @@ getProject = function(req, res){
 };
 
 
+
+updateProject = function(req, res) {
+  var project = {
+    pid: req.body.pid,
+    title: req.body.title,
+    description: req.body.description,
+    creation_date: req.body.creation_date,
+    dead_date: req.body.dead_date,
+    manager_id: req.body.manager_id,
+    status: req.body.manager_id
+  };
+
+  var query = "UPDATE Project_2 SET title='"+project.title
+    + "', description = '" +project.description
+    + "', creation_date = '" +project.creation_date
+    + "', dead_date = '" +project.dead_date
+    + "', manager_id = '" +project.manager_id
+    + "', status = '" +project.status
+    +"' where pid ='"+project.pid + "'";
+
+  mysql.fetchQuery(query, function (err, rows) {
+    if(err){
+      console.log('Couldnt execute Query : '+ query);
+      console.log(err);
+      return;
+    }
+    console.log('Query Successfully executed : '+query);
+    res.sendStatus(200);
+  });
+};
+
+
 exports.addProject = addProject;
 exports.getAllProjects = getAllProjects;
 exports.getProject = getProject;
+exports.updateProject = updateProject;
+

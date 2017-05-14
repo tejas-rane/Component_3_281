@@ -3,7 +3,6 @@
  */
 var mysql = require('mysql');
 
-
 function getConnection (){
   var connection = mysql.createConnection({
     user:'root',  // this will be your own db user name, mine is 'root'
@@ -31,8 +30,6 @@ function fetchQuery(sqlQuery, callback)
   console.log("\nConnection closed..");
   connection.end();
 }
-
-
 
 function putDataQuery(sqlQuery, data, callback)
 {
