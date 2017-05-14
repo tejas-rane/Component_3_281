@@ -1,36 +1,23 @@
 /**
  * Created by jayam on 5/3/17.
  */
+var mysql = require('./mysql');
 
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-  user:'root',  // this will be your own db user name, mine is 'root'
-  password:'admin', // your given passwrod for the db user name , my pwd is 'root'
-  database : 'CMPE281',  // enter the database name that you want to use
-});
 
 getAllProjects = function(req, res){
-  // connect to database
-  connection.connect(function (err) {
+  var query = "Select * from Project_2"; // prepare query
+  mysql.fetchQuery(query, function (err, rows) {
     if(err){
-      console.log('Couldnt Connect to DB');
+      console.log('Couldnt execute Query : '+ query);
       console.log(err);
       return;
     }
-    var query = "Select * from Project_2"; // prepare query
-
-    // use below fucntion to execute query
-    connection.query(query, function (err, rows) {
-      if(err){
-        console.log('Couldnt execute Query : '+ query);
-        console.log(err);
-        return;
-      }
-      console.log('Query Successfully executed : '+query+' , Row count : '+rows.length);
-      res.send(rows); // send back the projects
-    });
+    console.log('Query Successfully executed : '+query+' , Row count : '+rows.length);
+    res.send(rows); // send back the projects
   });
 };
+
+
 
 
 /*
@@ -60,25 +47,17 @@ addProject = function(req, res) {
   projStr = JSON.stringify(project)
   console.log('Rece Proj : ' + projStr);
 
+  var query = "insert into Project_2 SET ?"; // prepare query
 
-  connection.connect(function (err) {
+  // use below fucntion to execute insert query
+  mysql.putDataQuery(query, project, function (err, rows) {
     if(err){
-      console.log('Couldnt Connect to DB');
+      console.log('Couldnt execute Query : '+ query);
       console.log(err);
       return;
     }
-    var query = "insert into Project_2 SET ?"; // prepare query
-
-    // use below fucntion to execute insert query
-    connection.query(query, project, function (err, rows) {
-      if(err){
-        console.log('Couldnt execute Query : '+ query);
-        console.log(err);
-        return;
-      }
-      console.log('Query Successfully executed : '+query);
-      res.sendStatus(201); // send back the projects
-    });
+    console.log('Query Successfully executed : '+query);
+    res.sendStatus(201); // send back the projects
   });
 };
 
