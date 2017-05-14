@@ -17,9 +17,6 @@ getAllProjects = function(req, res){
   });
 };
 
-
-
-
 /*
 *   Smaple POST Request for adding project
 *   {
@@ -61,5 +58,22 @@ addProject = function(req, res) {
   });
 };
 
+
+getProject = function(req, res){
+  var pid = req.body.pid;
+  var query = 'select * from Project_2 where pid = "' + pid + '"'; // prepare query
+  mysql.fetchQuery(query, function (err, rows) {
+    if(err){
+      console.log('Couldnt execute Query : '+ query);
+      console.log(err);
+      return;
+    }
+    console.log('Query Successfully executed : '+query+' , Row count : '+rows.length);
+    res.send(rows); // send back the projects
+  });
+};
+
+
 exports.addProject = addProject;
 exports.getAllProjects = getAllProjects;
+exports.getProject = getProject;

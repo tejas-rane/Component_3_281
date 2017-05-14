@@ -21,6 +21,7 @@ app.set('view engine','ejs');
 
 app.get('/projects', projects.getAllProjects)
 app.post('/projects', projects.addProject)
+app.post('/getProject', projects.getProject)
 
 module.exports = app;
 
