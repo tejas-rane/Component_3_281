@@ -17,8 +17,15 @@ create table Test_5 (test_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, case_na
 Table Name : Project_Test_Map
 create table Project_Test_Map_6(pid INT(6) REFERENCES Project_2 (pid), testid INT(6) REFERENCES Test_5 (test_id));
 
+Table Name : Project_Monitoring
+create table Project_Monitoring ( pid INT(6) REFERENCES Project_2 (pid), event VARCHAR(300), event_date DATE);
+
 Add Manager :
 insert into Managers_1 (email,password) values ('abc@abc.com','123456');
 
 Add Project :
 insert into Project_2 (title,description, creation_date, dead_date, manager_id, status) values ('DummYProj','This is a Dummy Project ', '2017-05-03','2027-05-03',1, 'A');
+
+
+Add Project_Monitoring :
+insert into Project_Monitoring (pid,event, event_date) values (1,'mangaer ABC was Added as contributor ', '2017-05-03');

@@ -74,7 +74,6 @@ getProject = function(req, res){
 };
 
 
-
 updateProject = function(req, res) {
   var project = {
     pid: req.body.pid,
@@ -106,8 +105,25 @@ updateProject = function(req, res) {
 };
 
 
+
+getProjectMonitoring = function(req, res){
+  var pid = req.body.pid;
+  var query = 'select * from Project_Monitoring where pid = "' + pid + '" order by event_date desc'; // prepare query
+  mysql.fetchQuery(query, function (err, rows) {
+    if(err){
+      console.log('Couldnt execute Query : '+ query);
+      console.log(err);
+      return;
+    }
+    console.log('Query Successfully executed : '+query+' , Row count : '+rows.length);
+    res.send(rows); // send back the projects
+  });
+};
+
+
 exports.addProject = addProject;
 exports.getAllProjects = getAllProjects;
 exports.getProject = getProject;
 exports.updateProject = updateProject;
+exports.getProjectMonitoring = getProjectMonitoring;
 
