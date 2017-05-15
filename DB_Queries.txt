@@ -56,11 +56,11 @@ UPDATE project_2 set URL='www.google.com' WHERE pid=1;
 select * from project_2 as p inner join managers_1 as m on p.manager_id = m.mid;
 
 //dummy test cases
-insert into test_5 (case_name) values ('Test of login functionality');
-insert into test_5 (case_name) values ('Test table insert');
-insert into test_5 (case_name) values ('verify table update');
-insert into test_5 (case_name) values ('compare project list count');
-insert into test_5 (case_name) values ('Test access scope');
+insert into Test_5 (case_name) values ('Test of login functionality');
+insert into Test_5 (case_name) values ('Test table insert');
+insert into Test_5 (case_name) values ('verify table update');
+insert into Test_5 (case_name) values ('compare project list count');
+insert into Test_5 (case_name) values ('Test access scope');
 
 //mapping projects with test cases (not needed now : alternate is implemented)
 Project_Test_Map_6(pid INT(6) REFERENCES Project_2 (pid), testid INT(6) REFERENCES Test_5 (test_id));
@@ -74,8 +74,8 @@ insert into Project_Test_Map_6 (pid, testid) values (4,4);
 insert into Project_Test_Map_6 (pid, testid) values (4,5);
 
 //
-ALTER table test_5 add pid varchar(20) references Project_2 (pid);
-update test_5 set pid = 4;
+ALTER table Test_5 add pid varchar(20) references Project_2 (pid);
+update Test_5 set pid = 4;
 
 //adding contributors for testing
 insert into Project_Contributors (pid, mid, date_added) values(2,3,'2017-05-15');

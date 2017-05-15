@@ -78,7 +78,7 @@ getAllUsers = function(req, res){
             console.log(err);
             return;
         }
-        var query = "Select * from managers_1"; // prepare query
+        var query = "Select * from Managers_1"; // prepare query
         // use below fucntion to execute query
         connection.query(query, function (err, rows) {
             if(err){
