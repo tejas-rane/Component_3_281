@@ -1,32 +1,9 @@
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-<!--<head>-->
-<!--<meta charset="UTF-8" />-->
-<!--<title>Hello World</title>-->
-<!--<script src="https://unpkg.com/react@latest/dist/react.js"></script>-->
-<!--<script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>-->
-<!--<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div id="root"></div>-->
-<!--<script type="text/babel">-->
-
-<!--ReactDOM.render(-->
-<!--<h1>Hello, world! This is CMPE 281 Project index </h1>,-->
-<!--document.getElementById('root')-->
-<!--);-->
-
-<!--</script>-->
-<!--</body>-->
-<!--</html>-->
-
-<!--NEW-->
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>React - Template</title>
+    <title>weTest</title>
     <!--<link rel="stylesheet" type="text/css" href="/css/main.css">-->
 
     <link rel="stylesheet" href="/css/style.css">
@@ -46,7 +23,7 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#"><h1>CMPE 281</h1></a>
+                <a class="navbar-brand" href="#"><h1>We Test</h1></a>
             </div><!-- navbar-header -->
         </div><!-- container -->
     </nav>
@@ -290,28 +267,29 @@
                             getInitialState: function() {
                                 return {
                                     aptBodyVisible: false,
-                                    orderBy: 'petName',
+                                    orderBy: 'title',
                                     orderDir: 'asc',
                                     queryText: '',
                                     myData: []
                                 }
                             },
                             componentDidMount: function() {
-                                this.serverRequest = $.get('/json/data.json', function(result) {
+                                //this.serverRequest = $.get('/json/data.json', function(result) {
+                                this.serverRequest = $.get('http://localhost:3000/projects', function(result) {
                                     var tempApts = result;
                                     this.setState({
                                         myData: tempApts
                                     });//setState
                                 }.bind(this));
 
-                              this.serverRequest = $.get('http://localhost:3000/projects', function(result) {
-                                var tempApts = result;
-                                console.log('In hanlder of request ... ');
-                                console.log(result);
+                                this.serverRequest = $.get('http://localhost:3000/projects', function(result) {
+                                    var tempApts = result;
+                                    console.log('In hanlder of request ... ');
+                                    console.log(result);
 //                                this.setState({
 //                                  myData: tempApts
 //                                });//setState
-                              }.bind(this));
+                                }.bind(this));
 
                             },
                             componentWillUnmount: function () {
@@ -360,10 +338,10 @@
 
                                 myData.forEach(function (item) {
                                     if(
-                                        (item.petName.toLowerCase().indexOf(queryText)!= -1) ||
-                                        (item.ownerName.toLowerCase().indexOf(queryText)!= -1) ||
-                                        (item.aptDate.toLowerCase().indexOf(queryText)!= -1) ||
-                                        (item.aptNotes.toLowerCase().indexOf(queryText)!= -1)
+                                        (item.title.toLowerCase().indexOf(queryText)!= -1) ||
+                                        (item.ManagerName.toLowerCase().indexOf(queryText)!= -1) ||
+                                        (item.dead_date.toLowerCase().indexOf(queryText)!= -1) ||
+                                        (item.description.toLowerCase().indexOf(queryText)!= -1)
                                     ){
                                         filteredApts.push(item);
                                     }
@@ -421,18 +399,18 @@
                                             </div>
                                             <div className="pet-info media-body">
                                                 <div className="pet-head">
-                                                    <span className="pet-name">{this.props.singleItem.petName}</span>
-                                                    <span className="apt-date pull-right">{this.props.singleItem.aptDate}</span>
+                                                    <span className="pet-name">{this.props.singleItem.title}</span>
+                                                    <span className="apt-date pull-right">{this.props.singleItem.dead_date}</span>
                                                 </div>
                                                 <div className="owner-name">
                                                     <span className="label-item">Owner:</span>
-                                                    {this.props.singleItem.ownerName}
+                                                    {this.props.singleItem.ManagerName}
                                                 </div>
                                                 <div className="owner-name">
                                                     <span className="label-item">Project Github URL:</span>
-                                                    {this.props.singleItem.url}
+                                                    {this.props.singleItem.URL}
                                                 </div>
-                                                <div className="apt-notes">{this.props.singleItem.aptNotes}
+                                                <div className="apt-notes">{this.props.singleItem.description}
                                                 </div>
                                             </div>
                                         </li>
@@ -445,13 +423,25 @@
                             },
                             handleAdd: function (e) {
                                 var tempItem = {
-                                    petName: this.refs.inputPetName.value,
-                                    ownerName: this.refs.inputOwnerName.value,
-                                    url: this.refs.inputURL.value,
-                                    aptDate: this.refs.inputAptDate.value + ' ' + this.refs.inputAptTime.value,
-                                    aptNotes: this.refs.inputAptNotes.value
+                                    title: this.refs.inputtitle.value,
+                                    //ManagerName: parseInt(this.refs.inputManagerName.value),
+                                    manager_id: parseInt(this.refs.inputManagerName.value),
+                                    URL: this.refs.inputURL.value,
+                                    dead_date: this.refs.inputdead_date.value,
+                                    description: this.refs.inputdescription.value,
+                                    creation_date:this.refs.inputcreation_date.value
                                 }//tempItem
                                 e.preventDefault();
+                                fetch('http://localhost:3000/projects', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(tempItem)
+                                })
+                                var tempItemStr = JSON.stringify(tempItem)
+                                console.log("string item "+tempItemStr);
                                 this.props.addApt(tempItem);
                             },//handleAdd
                             render: function () {
@@ -467,44 +457,44 @@
                                             <div className="panel-body" style={ displayAptBody }>
                                                 <form className="add-appointment form-horizontal" onSubmit= { this.handleAdd }>
                                                     <div className="form-group">
-                                                        <label className="col-sm-2 control-label" for="petName">Project Name</label>
+                                                        <label className="col-sm-2 control-label" for="title">Project Name</label>
                                                         <div className="col-sm-10">
                                                             <input type="text" className="form-control"
-                                                                   id="petName" ref="inputPetName" placeholder="Project Name"/>
+                                                                   id="title" ref="inputtitle" placeholder="Project Name"/>
                                                         </div>
                                                     </div>
                                                     <div className="form-group">
                                                         <label className="col-sm-2 control-label" for="petOwner">Owner</label>
                                                         <div className="col-sm-10">
-                                                            <input type="text" className="form-control"
-                                                                   id="petOwner" ref="inputOwnerName" placeholder="Owner's Name"/>
+                                                            <input type="number" className="form-control"
+                                                                   id="petOwner" ref="inputManagerName" placeholder="Owner's Name"/>
                                                         </div>
                                                     </div>
                                                     <div className="form-group">
                                                         <label className="col-sm-2 control-label" for="petOwner">Project GitHub URL</label>
                                                         <div className="col-sm-10">
                                                             <input type="text" className="form-control"
-                                                                   id="url" ref="inputURL" placeholder="URL"/>
+                                                                   id="URL" ref="inputURL" placeholder="URL"/>
                                                         </div>
                                                     </div>
                                                     <div className="form-group">
-                                                        <label className="col-sm-2 control-label" for="aptDate">Date</label>
+                                                        <label className="col-sm-2 control-label" for="creation_date">Start-Date</label>
                                                         <div className="col-sm-4">
                                                             <input type="date" className="form-control"
-                                                                   id="aptDate" ref="inputAptDate"/>
+                                                                   id="creation_date" ref="inputcreation_date"/>
                                                         </div>
-                                                        <label className="col-sm-2 control-label" for="aptTime">Time</label>
+                                                        <label className="col-sm-2 control-label" for="dead_date">End-Date</label>
                                                         <div className="col-sm-4">
-                                                            <input type="time" className="form-control"
-                                                                   id="aptTime" ref="inputAptTime"/>
+                                                            <input type="date" className="form-control"
+                                                                   id="dead_date" ref="inputdead_date"/>
                                                         </div>
 
                                                     </div>
                                                     <div className="form-group">
-                                                        <label className="col-sm-2 control-label" for="aptNotes">Notes</label>
+                                                        <label className="col-sm-2 control-label" for="description">Notes</label>
                                                         <div className="col-sm-10">
                                                                 <textarea className="form-control" rows="4" cols="50"
-                                                                          id="aptNotes" ref="inputAptNotes" placeholder="Notes">
+                                                                          id="description" ref="inputdescription" placeholder="Notes">
 
                                                                 </textarea>
                                                         </div>
@@ -541,9 +531,9 @@
                                                         <button type="button" className="btn btn-primary dropdown-toggle"
                                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by: <span className="caret"></span></button>
                                                         <ul className="dropdown-menu dropdown-menu-right">
-                                                            <li><a href="#" id="petName" onClick={ this.handleSort }>Project Name{ (this.props.orderBy === 'petName') ? <span className="glyphicon glyphicon-ok"></span>: null} </a></li>
-                                                            <li><a href="#" id="aptDate" onClick={ this.handleSort }>Date { (this.props.orderBy === 'aptDate') ? <span className="glyphicon glyphicon-ok"></span>: null}</a></li>
-                                                            <li><a href="#" id="ownerName" onClick={ this.handleSort }>Owner { (this.props.orderBy === 'ownerName') ? <span className="glyphicon glyphicon-ok"></span>: null }</a></li>
+                                                            <li><a href="#" id="title" onClick={ this.handleSort }>Project Name{ (this.props.orderBy === 'title') ? <span className="glyphicon glyphicon-ok"></span>: null} </a></li>
+                                                            <li><a href="#" id="dead_date" onClick={ this.handleSort }>Date { (this.props.orderBy === 'dead_date') ? <span className="glyphicon glyphicon-ok"></span>: null}</a></li>
+                                                            <li><a href="#" id="ManagerName" onClick={ this.handleSort }>Owner { (this.props.orderBy === 'ManagerName') ? <span className="glyphicon glyphicon-ok"></span>: null }</a></li>
                                                             <li role="separator" className="divider"></li>
                                                             <li><a href="#" id="asc" onClick={ this.handleOrder }>Asc { (this.props.orderDir === 'asc') ? <span className="glyphicon glyphicon-ok"></span>: null } </a></li>
                                                             <li><a href="#" id="desc" onClick={ this.handleOrder }>Desc { (this.props.orderDir === 'desc') ? <span className="glyphicon glyphicon-ok"></span>: null }</a></li>
@@ -567,4 +557,3 @@
 </div>
 </body>
 </html>
-
