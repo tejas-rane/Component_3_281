@@ -1,4 +1,3 @@
-
 Table Name : Manager
 create table Managers_1 ( mid INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, email VARCHAR(30) NOT NULL, password VARCHAR (30) NOT NULL, type VARCHAR(3) DEFAULT 'M', archive VARCHAR(3) DEFAULT 'N');
 
@@ -43,3 +42,14 @@ insert into Project_Tags_Map_4 (pid, tid) values (1,1);
 
 Select Project_tags:
 select  b.tag_name from Project_Tags_Map_4 a, Tags_3 b where a.tid = b.tid and a.pid = 2
+
+ALTER table project_2 add URL varchar(40);
+
+ALTER table managers_1 add ManagerName varchar(20);
+
+UPDATE managers_1 set ManagerName='Tejas' WHERE mid=1;
+
+UPDATE project_2 set URL='www.google.com' WHERE pid=1;
+
+
+select * from project_2 as p inner join managers_1 as m on p.manager_id = m.mid;
