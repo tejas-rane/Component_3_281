@@ -6,3 +6,9 @@ exports.index = function(req, res){
         title:'Express'
     })
 }
+
+exports.projectDetail = function(req, res){
+  res.render('projectDetail',{
+    title:'Project Detail'
+  })
+}

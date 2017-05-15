@@ -5,7 +5,7 @@ var mysql = require('./mysql');
 
 
 getAllProjects = function(req, res){
-  var query = "Select * from Project_2 as p inner join managers_1 as m on p.manager_id=m.mid"; // prepare query
+  var query = "Select * from Project_2 as p inner join Managers_1 as m on p.manager_id=m.mid"; // prepare query
   mysql.fetchQuery(query, function (err, rows) {
     if(err){
       console.log('Couldnt execute Query : '+ query);
