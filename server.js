@@ -25,6 +25,16 @@ app.post('/getProject', projects.getProject)
 app.post('/getProjectMonitoring', projects.getProjectMonitoring)
 app.post('/getProjectTags', projects.getProjectTags)
 app.post('/updateProject', projects.updateProject)
+// test cases
+app.post('/getProjectTests', projects.getProjectTest)
+app.post('/addProjectTest', projects.addProjectTest)
+app.post('/removeProjectTest', projects.removeProjectTest)
+
+//contributors
+app.post('/getProjectContributors', projects.getContributor)
+app.post('/addProjectContributors', projects.addContributor)
+
+
 
 module.exports = app;
 

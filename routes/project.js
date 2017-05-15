@@ -136,11 +136,144 @@ getProjectTags = function(req, res){
   });
 };
 
+getProjectTest =  function(req, res){
+    var pid = req.body.pid;
+    var query = 'select t.case_name, t.pid, t.test_id from Test_5 t where t.pid = "' + pid + '" ';
+    mysql.fetchQuery(query, function (err, rows) {
+        if(err){
+            console.log('Couldnt execute Query : '+ query);
+            console.log(err);
+            return;
+        }
+        console.log('Query Successfully executed : '+query+' , Row count : '+rows.length);
+        res.send(rows);
+    });
+};
+
+addProjectTest = function(req, res) {
+    // extract project values from the request to save
+    /*
+     {
+     "case_name" : "verify date field",
+     "pid": 3
+     }
+     */
+    var project = {
+        case_name: req.body.case_name,
+        pid: req.body.pid
+    };
+
+    // to get a string representation of the project, helpful for debugging
+    projStr = JSON.stringify(project)
+    console.log('Rece Proj : ' + projStr);
+
+    var query = "insert into test_5 SET ?"; // prepare query
+
+    // use below fucntion to execute insert query
+    mysql.putDataQuery(query, project, function (err, rows) {
+        if(err){
+            console.log('Couldnt execute Query : '+ query);
+            console.log(err);
+            return;
+        }
+        console.log('Query Successfully executed : '+query);
+        res.sendStatus(201); // send back the projects
+    });
+};
+
+
+removeProjectTest = function(req, res) {
+    // extract project values from the request to save
+  /*
+   {
+   "test_id" : 4
+   }
+   */
+    var project = {
+        test_id: req.body.test_id
+    };
+
+    // to get a string representation of the project, helpful for debugging
+    projStr = JSON.stringify(project)
+    console.log('Rece Proj : ' + projStr);
+
+    var query = "DELETE from test_5 where ?"; // prepare query
+
+    // use below fucntion to execute insert query
+    mysql.putDataQuery(query, project, function (err, rows) {
+        if(err){
+            console.log('Couldnt execute Query : '+ query);
+            console.log(err);
+            return;
+        }
+        console.log('Query Successfully executed : '+query);
+        res.sendStatus(200); // send back the projects
+    });
+};
+
+getContributor = function(req, res){
+  /*
+   {
+   "pid" : 4
+   }
+   */
+    var pid = req.body.pid;
+    var query = 'select m.managerName , m.mid from Project_contributors c inner join managers_1 m on c.mid=m.mid  where c.pid = "' + pid + '" ';
+    mysql.fetchQuery(query, function (err, rows) {
+        if(err){
+            console.log('Couldnt execute Query : '+ query);
+            console.log(err);
+            return;
+        }
+        console.log('Query Successfully executed : '+query+' , Row count : '+rows.length);
+        res.send(rows);
+    });
+};
+
+addContributor = function(req, res) {
+    // extract project values from the request to save
+  /*
+   {
+   "mid" : 1,
+   "pid": 3,
+   "date_added" : "2017-05-17"
+   }
+   */
+    var project = {
+        mid: req.body.mid,
+        pid: req.body.pid,
+        date_added : req.body.date_added
+    };
+
+    // to get a string representation of the project, helpful for debugging
+    projStr = JSON.stringify(project)
+    console.log('Rece Proj : ' + projStr);
+
+    var query = "insert into project_contributors SET ?"; // prepare query
+
+    // use below fucntion to execute insert query
+    mysql.putDataQuery(query, project, function (err, rows) {
+        if(err){
+            console.log('Couldnt execute Query : '+ query);
+            console.log(err);
+            return;
+        }
+        console.log('Query Successfully executed : '+query);
+        res.sendStatus(201); // send back the projects
+    });
+};
+
+
+
+
 exports.addProject = addProject;
 exports.getAllProjects = getAllProjects;
 exports.getProject = getProject;
 exports.updateProject = updateProject;
 exports.getProjectMonitoring = getProjectMonitoring;
 exports.getProjectTags = getProjectTags;
-
-
+exports.getProjectTest = getProjectTest;
+exports.addProjectTest = addProjectTest;
+exports.removeProjectTest = removeProjectTest;
+exports.getContributor = getContributor;
+exports.addContributor = addContributor;

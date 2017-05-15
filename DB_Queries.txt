@@ -19,12 +19,15 @@ create table Project_Test_Map_6(pid INT(6) REFERENCES Project_2 (pid), testid IN
 Table Name : Project_Monitoring
 create table Project_Monitoring ( pid INT(6) REFERENCES Project_2 (pid), event VARCHAR(300), event_date DATE);
 
+Table Name : Project_Contributors
+create table Project_Contributors ( pid INT(6) REFERENCES Project_2 (pid), mid INT(6) REFERENCES Managers_1(mid), date_added DATE);
+
+
 Add Manager :
 insert into Managers_1 (email,password) values ('abc@abc.com','123456');
 
 Add Project :
 insert into Project_2 (title,description, creation_date, dead_date, manager_id, status) values ('DummYProj','This is a Dummy Project ', '2017-05-03','2027-05-03',1, 'A');
-
 
 Add Project_Monitoring :
 insert into Project_Monitoring (pid,event, event_date) values (1,'mangaer ABC was Added as contributor ', '2017-05-03');
@@ -32,10 +35,8 @@ insert into Project_Monitoring (pid,event, event_date) values (1,'mangaer ABC wa
 Add Project_Monitoring :
 insert into Project_Monitoring (pid, event, event_date) values (1,'mangaer ABC was Added as contributor ', '2017-05-03');
 
-
 Add Tags:
 insert into Tags_3 (tag_name) values ('Web');
-
 
 Add Project_Tags_Map_4:
 insert into Project_Tags_Map_4 (pid, tid) values (1,1);
@@ -43,6 +44,7 @@ insert into Project_Tags_Map_4 (pid, tid) values (1,1);
 Select Project_tags:
 select  b.tag_name from Project_Tags_Map_4 a, Tags_3 b where a.tid = b.tid and a.pid = 2
 
+//some changes to map the UI
 ALTER table project_2 add URL varchar(40);
 
 ALTER table managers_1 add ManagerName varchar(20);
@@ -51,5 +53,31 @@ UPDATE managers_1 set ManagerName='Tejas' WHERE mid=1;
 
 UPDATE project_2 set URL='www.google.com' WHERE pid=1;
 
-
 select * from project_2 as p inner join managers_1 as m on p.manager_id = m.mid;
+
+//dummy test cases
+insert into test_5 (case_name) values ('Test of login functionality');
+insert into test_5 (case_name) values ('Test table insert');
+insert into test_5 (case_name) values ('verify table update');
+insert into test_5 (case_name) values ('compare project list count');
+insert into test_5 (case_name) values ('Test access scope');
+
+//mapping projects with test cases (not needed now : alternate is implemented)
+Project_Test_Map_6(pid INT(6) REFERENCES Project_2 (pid), testid INT(6) REFERENCES Test_5 (test_id));
+insert into Project_Test_Map_6 (pid, testid) values (2,1);
+insert into Project_Test_Map_6 (pid, testid) values (2,2);
+insert into Project_Test_Map_6 (pid, testid) values (2,3);
+insert into Project_Test_Map_6 (pid, testid) values (4,1);
+insert into Project_Test_Map_6 (pid, testid) values (4,2);
+insert into Project_Test_Map_6 (pid, testid) values (4,3);
+insert into Project_Test_Map_6 (pid, testid) values (4,4);
+insert into Project_Test_Map_6 (pid, testid) values (4,5);
+
+//
+ALTER table test_5 add pid varchar(20) references Project_2 (pid);
+update test_5 set pid = 4;
+
+//adding contributors for testing
+insert into Project_Contributors (pid, mid, date_added) values(2,3,'2017-05-15');
+insert into Project_Contributors (pid, mid, date_added) values(4,3,'2017-05-15');
+insert into Project_Contributors (pid, mid, date_added) values(4,1,'2017-05-15');
