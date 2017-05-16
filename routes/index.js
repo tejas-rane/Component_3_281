@@ -13,6 +13,14 @@ exports.dashboard= function(req, res){
   })
 }
 
+
+exports.projectlist= function(req, res){
+  res.render('projectlist',{
+    title:'Express'
+  })
+}
+
+
 exports.forms= function(req, res){
   res.render('forms',{
     title:'Express'

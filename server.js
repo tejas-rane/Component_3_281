@@ -18,6 +18,7 @@ app.use(express.static(path.join(__dirname,'src')));//new
 
 
 app.get('/index',routes.index);
+app.get('/projectlist',routes.projectlist);
 app.get('/dashboard',routes.dashboard);
 app.get('/forms',routes.forms);
 app.get('/',routes.login);
