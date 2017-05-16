@@ -12,6 +12,17 @@
     <title>281 </title>
 
     <script src="js/jquery.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/react.js"></script>
+    <script src="/js/react-dom.min.js"></script>
+    <script src="/js/browser.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.6/lodash.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <!--<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -160,7 +171,7 @@
                     </ul>
                 </li>
             </ul>
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+           <!--  Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
@@ -200,12 +211,12 @@
 
 
                             <div class="container">
-                                <table id="table" data-height="460" width="200">
+                                <table id="table" data-height="460" width="800">
                                     <thead>
                                     <tr>
-                                        <th data-field="ManagerName" width="50"> Manager</th>
-                                        <th data-field="title" width="50"> <div >Title</div></th>
-                                        <th data-field="URL" width="50"> <div >URL</div></th>
+                                        <th data-field="ManagerName" width="250"> Manager                </th>
+                                        <th data-field="title" width="250"> <div>Title</div></th>
+                                        <th data-field="URL" width="250"> <div >URL</div></th>
                                         <!--<th data-field="title" style="width:40px">Title</th>-->
                                         <!--<th data-field="description" style="width:40px">Description</th>-->
                                         <!--<th data-field="URL" style="width:40px">URL</th>-->
@@ -216,6 +227,54 @@
 
                         </div>
                     </div>
+                    <h2></h2>
+                    <div id="petAppointments"></div>
+                    <script type="text/babel">
+                        var MainInterface = React.createClass({
+                            getInitialState: function() {
+                                return {
+                                    myData: []
+                                }
+                            },
+                            componentDidMount: function() {
+                                //this.serverRequest = $.get('/json/data.json', function(result) {
+                                this.serverRequest = $.get('http://localhost:3000/projects', function (result) {
+                                    var tempApts = result;
+                                    this.setState({
+                                        myData: tempApts
+                                    });//setState
+                                }.bind(this));
+                            },
+                            componentWillUnmount: function () {
+                                this.serverRequest.abort();
+                            },
+                            render: function(){
+                                var filteredApts = this.state.myData;
+                                filteredApts = filteredApts.map(function (item, index) {
+                                    return(
+                                        <li className="pet-item media" key={index}>
+                                            <div className="pet-info media-body">
+                                                <div className="pet-head">
+                                                    <span className="pet-name">{this.state.myData[index].title} </span>
+                                                    <span className="pet-name">{this.state.myData[index].description}</span>
+                                                </div>
+
+                                            </div>
+                                        </li>
+                                    )
+                                }.bind(this));
+                                return(
+                                    <div className="interface">
+                                        <ul className="item-list media-list">{filteredApts}</ul>
+                                    </div>
+
+                                )
+                            }
+                        });
+                        ReactDOM.render(
+                                <MainInterface />,document.getElementById('petAppointments')
+                        )
+                    </script>
                 </div>
                 <!-- /.row -->
             </div>

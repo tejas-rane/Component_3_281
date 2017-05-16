@@ -35,7 +35,7 @@ exports.projectDetail = function(req, res){
   })
 }
 exports.login = function(req, res) {
-    res.render('login', {
+    res.render('login1', {
         title: 'Express'
     })
 }
