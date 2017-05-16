@@ -17,7 +17,8 @@ app.use(express.static(path.join(__dirname,'src')));//new
 
 
 
-app.get('/',routes.index);
+app.get('/',routes.login);
+app.get('/index',routes.index);
 app.set('views',__dirname + '/views');
 app.set('view engine','ejs');
 
