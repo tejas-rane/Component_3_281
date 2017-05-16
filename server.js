@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname,'src')));//new
 
 
 app.get('/',routes.index);
-app.get('/projectDetails',routes.projectDetail);
+// app.get('/projectDetails/:pid',routes.projectDetail);
 
 app.set('views',__dirname + '/views');
 app.set('view engine','ejs');

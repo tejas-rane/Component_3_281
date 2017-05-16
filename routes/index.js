@@ -8,6 +8,8 @@ exports.index = function(req, res){
 }
 
 exports.projectDetail = function(req, res){
+  // console.log('Red ' + req.query.id);
+  console.log('Red ' + req.params);
   res.render('projectDetail',{
     title:'Project Detail'
   })
