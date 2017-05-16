@@ -264,7 +264,25 @@ addContributor = function(req, res) {
 };
 
 
-
+getAllProjectsForlist = function(req, res){
+    var query = "Select p.pid,p.title,p.description,p.creation_date,p.dead_date,p.url,m.ManagerName,test.case_name,"
+    +"pm.event,pm.event_date,tags.tag_name "
+    +"from Project_2 as p inner join Managers_1 as m on p.manager_id=m.mid "
+        +"inner join project_contributors as pc on p.pid= pc.pid "
+        +"inner join test_5 as test on test.pid=p.pid "
+        +"inner join project_monitoring as pm on p.pid= pm.pid "
+        +"inner join project_tags_map_4 as tm on tm.pid = p.pid "
+        +"inner join tags_3 as tags on tags.tid = tm.tid"; // prepare query
+    mysql.fetchQuery(query, function (err, rows) {
+        if(err){
+            console.log('Couldnt execute Query : '+ query);
+            console.log(err);
+            return;
+        }
+        console.log('Query Successfully executed : '+query+' , Row count : '+rows.length);
+        res.send(rows); // send back the projects
+    });
+};
 
 exports.addProject = addProject;
 exports.getAllProjects = getAllProjects;
@@ -277,3 +295,4 @@ exports.addProjectTest = addProjectTest;
 exports.removeProjectTest = removeProjectTest;
 exports.getContributor = getContributor;
 exports.addContributor = addContributor;
+exports.getAllProjectsForlist = getAllProjectsForlist
