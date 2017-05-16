@@ -14,3 +14,8 @@ exports.projectDetail = function(req, res){
     title:'Project Detail'
   })
 }
+exports.login = function(req, res) {
+    res.render('login', {
+        title: 'Express'
+    })
+}
