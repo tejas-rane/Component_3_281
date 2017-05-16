@@ -7,6 +7,18 @@ exports.index = function(req, res){
     })
 }
 
+exports.dashboard= function(req, res){
+  res.render('dashboard',{
+    title:'Express'
+  })
+}
+
+exports.forms= function(req, res){
+  res.render('forms',{
+    title:'Express'
+  })
+}
+
 exports.projectDetail = function(req, res){
   // console.log('Red ' + req.query.id);
   console.log('Red ' + req.params);
