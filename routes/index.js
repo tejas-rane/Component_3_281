@@ -7,8 +7,10 @@ exports.index = function(req, res){
     })
 }
 
-exports.login = function(req, res){
-    res.render('login',{
-        title:'Express'
-    })
+exports.projectDetail = function(req, res){
+  // console.log('Red ' + req.query.id);
+  console.log('Red ' + req.params);
+  res.render('projectDetail',{
+    title:'Project Detail'
+  })
 }

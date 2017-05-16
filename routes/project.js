@@ -5,7 +5,7 @@ var mysql = require('./mysql');
 
 
 getAllProjects = function(req, res){
-  var query = "Select * from Project_2 as p inner join managers_1 as m on p.manager_id=m.mid"; // prepare query
+  var query = "Select * from Project_2 as p inner join Managers_1 as m on p.manager_id=m.mid"; // prepare query
   mysql.fetchQuery(query, function (err, rows) {
     if(err){
       console.log('Couldnt execute Query : '+ query);
@@ -167,7 +167,7 @@ addProjectTest = function(req, res) {
     projStr = JSON.stringify(project)
     console.log('Rece Proj : ' + projStr);
 
-    var query = "insert into test_5 SET ?"; // prepare query
+    var query = "insert into Test_5 SET ?"; // prepare query
 
     // use below fucntion to execute insert query
     mysql.putDataQuery(query, project, function (err, rows) {
@@ -218,7 +218,7 @@ getContributor = function(req, res){
    }
    */
     var pid = req.body.pid;
-    var query = 'select m.managerName , m.mid from Project_contributors c inner join managers_1 m on c.mid=m.mid  where c.pid = "' + pid + '" ';
+    var query = 'select m.managerName , m.mid from Project_Contributors c inner join Managers_1 m on c.mid=m.mid  where c.pid = "' + pid + '" ';
     mysql.fetchQuery(query, function (err, rows) {
         if(err){
             console.log('Couldnt execute Query : '+ query);
@@ -249,7 +249,7 @@ addContributor = function(req, res) {
     projStr = JSON.stringify(project)
     console.log('Rece Proj : ' + projStr);
 
-    var query = "insert into project_contributors SET ?"; // prepare query
+    var query = "insert into Project_Contributors SET ?"; // prepare query
 
     // use below fucntion to execute insert query
     mysql.putDataQuery(query, project, function (err, rows) {
