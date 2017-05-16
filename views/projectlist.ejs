@@ -206,28 +206,31 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-12">
+                    <!--<div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
 
 
-                            <div class="container">
-                                <table id="table" data-height="460" width="800">
+                            &lt;!&ndash;<div class="container">
+                                <table id="table" data-height="800" width="800">
                                     <thead>
                                     <tr>
-                                        <th data-field="ManagerName" width="250"> Manager                </th>
-                                        <th data-field="title" width="250"> <div>Title</div></th>
-                                        <th data-field="URL" width="250"> <div >URL</div></th>
-                                        <!--<th data-field="title" style="width:40px">Title</th>-->
-                                        <!--<th data-field="description" style="width:40px">Description</th>-->
-                                        <!--<th data-field="URL" style="width:40px">URL</th>-->
+                                        <td data-field="ManagerName" width="250"> Manager                </td>
+                                        &lt;!&ndash;<th data-field="title" style="width:40px">Title</th>&ndash;&gt;
+                                        &lt;!&ndash;<th data-field="description" style="width:40px">Description</th>&ndash;&gt;
+                                        &lt;!&ndash;<th data-field="URL" style="width:40px">URL</th>&ndash;&gt;
+                                    </tr>
+                                    <tr>
+                                        <td data-field="title" width="250"> <div>Title</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td data-field="URL" width="250"> <div >URL</div></td>
                                     </tr>
                                     </thead>
                                 </table>
-                            </div>
+                            </div>&ndash;&gt;
 
                         </div>
-                    </div>
-                    <h2></h2>
+                    </div>-->
                     <div id="petAppointments"></div>
                     <script type="text/babel">
                         var MainInterface = React.createClass({
@@ -254,11 +257,33 @@
                                     return(
                                         <li className="pet-item media" key={index}>
                                             <div className="pet-info media-body">
-                                                <div className="pet-head">
-                                                    <span className="pet-name">{this.state.myData[index].title} </span>
-                                                    <span className="pet-name">{this.state.myData[index].description}</span>
+                                                <div>
+                                                    <table id="table" data-height="1800" width="800">
+                                                        <thead>
+                                                            <tr>
+                                                                <td className="pet-name" data-height="200" data-field="title" width="250"> <div>Title:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{this.state.myData[index].title}</div></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <br />
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="pet-name" data-height="200" data-field="title" width="250"> <div>Description:&ensp;{this.state.myData[index].description}</div></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <br />
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="pet-name" data-height="200" data-field="title" width="250"> <div>URL:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{this.state.myData[index].URL}</div></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <br />
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="pet-name" data-height="200" data-field="title" width="250"> <div>Manager:&ensp;&ensp;&ensp;&ensp;{this.state.myData[index].ManagerName}</div></td>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
                                                 </div>
-
                                             </div>
                                         </li>
                                     )
