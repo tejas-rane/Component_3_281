@@ -4,10 +4,16 @@
 var mysql = require('mysql');
 
 function getConnection (){
-  var connection = mysql.createConnection({
+  /*var connection = mysql.createConnection({
     user:'root',  // this will be your own db user name, mine is 'root'
     password:'admin', // your given passwrod for the db user name , my pwd is 'root'
     database : 'cmpe281',  // enter the database name that you want to use
+  });*/
+   var connection = mysql.createConnection({
+    host:'project-cmpe2-281.cjw5xovz6isr.us-west-2.rds.amazonaws.com',
+    user:'root',  // this will be your own db user name, mine is 'root'
+    password:'root1234', // your given passwrod for the db user name , my pwd is 'root'
+    database : 'project_281',  // enter the database name that you want to use
   });
 
   return connection;
