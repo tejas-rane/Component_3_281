@@ -39,13 +39,13 @@
 
 <script type="text/javascript">
   function UserAction() {
-    console.log('ZZZZZZZZZZZZZZZZZZZZZZz');
+   // console.log('ZZZZZZZZZZZZZZZZZZZZZZz');
     var xhttp = new XMLHttpRequest();
     xhttp.open("GET", "/projects", false);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
-    var response = JSON.parse(xhttp.responseText);
-    console.log('xxxxxxxxxx');
+    /*var response = JSON.parse(xhttp.responseText);
+    document.getElementById("getprojects").innerHTML = response.length;*/
     console.log(response);
 //    $(function () {
       $('#table').bootstrapTable({
@@ -55,7 +55,7 @@
   }
 
   $( document ).ready(function() {
-//    UserAction();
+    //UserAction();
   });
 
 </script>

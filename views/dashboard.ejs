@@ -34,7 +34,8 @@
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
     var response = JSON.parse(xhttp.responseText);
-    console.log('xxxxxxxxxx');
+      var response = JSON.parse(xhttp.responseText);
+      document.getElementById("getprojects").innerHTML = response.length;
     console.log(response);
 //    $(function () {
       $('#table').bootstrapTable({
@@ -44,7 +45,7 @@
   }
 
   $( document ).ready(function() {
-//    UserAction();
+    UserAction();
   });
 
 </script>
@@ -212,7 +213,7 @@
                                         <i class="fa fa-git-square fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">26</div>
+                                        <div class="huge" id="getprojects">26</div>
                                         <div>Projects!</div>
                                     </div>
                                 </div>

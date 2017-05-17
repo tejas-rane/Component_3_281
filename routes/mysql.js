@@ -6,7 +6,7 @@ var mysql = require('mysql');
 function getConnection (){
   var connection = mysql.createConnection({
     user:'root',  // this will be your own db user name, mine is 'root'
-    password:'root', // your given passwrod for the db user name , my pwd is 'root'
+    password:'admin', // your given passwrod for the db user name , my pwd is 'root'
     database : 'cmpe281',  // enter the database name that you want to use
   });
 
