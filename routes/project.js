@@ -227,7 +227,7 @@ removeProjectTest = function(req, res) {
     projStr = JSON.stringify(project)
     console.log('Rece Proj : ' + projStr);
 
-    var query = "DELETE from test_5 where ?"; // prepare query
+    var query = "DELETE from Test_5 where ?"; // prepare query
 
     // use below fucntion to execute insert query
     mysql.putDataQuery(query, project, function (err, rows) {
@@ -263,7 +263,7 @@ getContributor = function(req, res){
 getContributorCount = function(req, res){
     console.log("here");
     var pid = req.body.pid;
-    var query = 'select * from managers_1 ';
+    var query = 'select * from Managers_1 ';
     mysql.fetchQuery(query, function (err, rows) {
         if(err){
             console.log('Couldnt execute Query : '+ query);
@@ -313,11 +313,11 @@ getAllProjectsForlist = function(req, res){
     var query = "Select p.pid,p.title,p.description,p.creation_date,p.dead_date,p.url,m.ManagerName,test.case_name,"
     +"pm.event,pm.event_date,tags.tag_name "
     +"from Project_2 as p inner join Managers_1 as m on p.manager_id=m.mid "
-        +"inner join project_contributors as pc on p.pid= pc.pid "
-        +"inner join test_5 as test on test.pid=p.pid "
-        +"inner join project_monitoring as pm on p.pid= pm.pid "
-        +"inner join project_tags_map_4 as tm on tm.pid = p.pid "
-        +"inner join tags_3 as tags on tags.tid = tm.tid group by p.pid "; // prepare query
+        +"inner join Project_Contributors as pc on p.pid= pc.pid "
+        +"inner join Test_5 as test on test.pid=p.pid "
+        +"inner join Project_Monitoring as pm on p.pid= pm.pid "
+        +"inner join Project_Tags_Map_4 as tm on tm.pid = p.pid "
+        +"inner join Tags_3 as tags on tags.tid = tm.tid group by p.pid "; // prepare query
     mysql.fetchQuery(query, function (err, rows) {
         if(err){
             console.log('Couldnt execute Query : '+ query);
