@@ -7,6 +7,7 @@ var http = require('http');
 var bodyParser = require('body-parser');
 var path = require('path');                 //new
 var projects = require('./routes/project');
+var register = require('./routes/register');
 
 
 var app = express();
@@ -39,10 +40,19 @@ app.get('/projectslist', projects.getAllProjectsForlist)
 app.post('/getProjectTests', projects.getProjectTest)
 app.post('/addProjectTest', projects.addProjectTest)
 app.post('/removeProjectTest', projects.removeProjectTest)
+app.get('/getProjectTestCount', projects.getProjectTestCount)
+
+//tags
+app.get('/getAllProjectTags', projects.getAllProjectTags)
+
 
 //contributors
 app.post('/getProjectContributors', projects.getContributor)
 app.post('/addProjectContributors', projects.addContributor)
+app.get('/getProjectContributorsCount', projects.getContributorCount)
+
+//login
+app.post('/login', register.login)
 
 
 

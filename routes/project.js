@@ -136,9 +136,38 @@ getProjectTags = function(req, res){
   });
 };
 
+getAllProjectTags = function(req, res){
+    var pid = req.body.pid;
+    //select  b.tag_name from Project_Tags_Map_4 a, Tags_3 b where a.tid = b.tid and a.pid = 2
+    var query = 'select * from Tags_3 ';
+    mysql.fetchQuery(query, function (err, rows) {
+        if(err){
+            console.log('Couldnt execute Query : '+ query);
+            console.log(err);
+            return;
+        }
+        console.log('Query Successfully executed : '+query+' , Row count : '+rows.length);
+        res.send(rows);
+    });
+};
+
 getProjectTest =  function(req, res){
     var pid = req.body.pid;
     var query = 'select t.case_name, t.pid, t.test_id from Test_5 t where t.pid = "' + pid + '" ';
+    mysql.fetchQuery(query, function (err, rows) {
+        if(err){
+            console.log('Couldnt execute Query : '+ query);
+            console.log(err);
+            return;
+        }
+        console.log('Query Successfully executed : '+query+' , Row count : '+rows.length);
+        res.send(rows);
+    });
+};
+
+getProjectTestCount =  function(req, res){
+
+    var query = 'select * from Test_5';
     mysql.fetchQuery(query, function (err, rows) {
         if(err){
             console.log('Couldnt execute Query : '+ query);
@@ -230,6 +259,21 @@ getContributor = function(req, res){
     });
 };
 
+getContributorCount = function(req, res){
+    console.log("here");
+    var pid = req.body.pid;
+    var query = 'select * from Project_Contributors ';
+    mysql.fetchQuery(query, function (err, rows) {
+        if(err){
+            console.log('Couldnt execute Query : '+ query);
+            console.log(err);
+            return;
+        }
+        console.log('Query Successfully executed : '+query+' , Row count : '+rows.length);
+        res.send(rows);
+    });
+};
+
 addContributor = function(req, res) {
     // extract project values from the request to save
   /*
@@ -272,7 +316,7 @@ getAllProjectsForlist = function(req, res){
         +"inner join test_5 as test on test.pid=p.pid "
         +"inner join project_monitoring as pm on p.pid= pm.pid "
         +"inner join project_tags_map_4 as tm on tm.pid = p.pid "
-        +"inner join tags_3 as tags on tags.tid = tm.tid group by p.pid "; // prepare query
+        +"inner join tags_3 as tags on tags.tid = tm.tid  "; // prepare query
     mysql.fetchQuery(query, function (err, rows) {
         if(err){
             console.log('Couldnt execute Query : '+ query);
@@ -296,3 +340,6 @@ exports.removeProjectTest = removeProjectTest;
 exports.getContributor = getContributor;
 exports.addContributor = addContributor;
 exports.getAllProjectsForlist = getAllProjectsForlist
+exports.getContributorCount = getContributorCount
+exports.getProjectTestCount = getProjectTestCount
+exports.getAllProjectTags = getAllProjectTags

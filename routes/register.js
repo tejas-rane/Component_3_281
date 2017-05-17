@@ -2,12 +2,7 @@
  * Created by tejas on 5/4/2017.
  */
 
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-    user:'root',  // this will be your own db user name, mine is 'root'
-    password:'admin', // your given passwrod for the db user name , my pwd is 'root'
-    database : 'cmpe281',  // enter the database name that you want to use
-});
+var mysql = require('./mysql');
 
 
 login = function(req, res) {
@@ -18,29 +13,49 @@ login = function(req, res) {
     };
     loginStr = JSON.stringify(login)
     console.log('log in details : ' + loginStr);
-    connection.connect(function (err) {
+    // connection.connect(function (err) {
+    //     if(err){
+    //         console.log('Could not Connect to DB');
+    //         console.log(err);
+    //         return;
+    //     }
+    //     var query = 'select * from Managers_1 WHERE  email = "' + login.email + '" and password = "'+ login.password +'"'; // prepare query
+    //     //var query = "select * FROM managers_1 in ?"; // prepare query
+    //     connection.query(query, function (err, rows) {
+    //         if(err){
+    //             console.log('Could not execute Query : '+ query);
+    //             console.log(err);
+    //             return;
+    //         }
+    //         console.log('Query Successfully executed : '+query);
+    //         if(rows.length === 1){
+    //             res.sendStatus(200);
+    //         }
+    //        else{
+    //             res.sendStatus(403); // send back error code
+    //         }
+    //     });
+    //     connection.end();
+    // });
+
+
+    var query = 'select * from Managers_1 WHERE  email = "' + login.email + '" and password = "'+ login.password +'"'; // prepare query
+    mysql.fetchQuery(query, function (err, rows) {
         if(err){
-            console.log('Could not Connect to DB');
+            console.log('Couldnt execute Query : '+ query);
             console.log(err);
             return;
         }
-        var query = 'select * from Managers_1 WHERE  email = "' + login.email + '" and password = "'+ login.password +'"'; // prepare query
-        //var query = "select * FROM managers_1 in ?"; // prepare query
-        connection.query(query, function (err, rows) {
-            if(err){
-                console.log('Could not execute Query : '+ query);
-                console.log(err);
-                return;
-            }
-            console.log('Query Successfully executed : '+query);
-            if(rows.length === 1){
-                res.sendStatus(200);
-            }
-           else{
-                res.sendStatus(403); // send back error code
-            }
-        });
-        connection.end();
+        console.log('Query Successfully executed : '+query+' , Row count : '+rows.length);
+        var resp;
+        if(rows.length == 1){
+            resp = {val: true};
+        }
+        else {
+            resp = {val: false};
+             // send back the projects
+        }
+        res.send(resp);
     });
 };
 registerUser = function(req, res) {

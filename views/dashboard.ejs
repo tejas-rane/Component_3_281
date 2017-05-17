@@ -28,15 +28,40 @@
 
 <script type="text/javascript">
   function UserAction() {
-    console.log('ZZZZZZZZZZZZZZZZZZZZZZz');
+
     var xhttp = new XMLHttpRequest();
     xhttp.open("GET", "/projects", false);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
     var response = JSON.parse(xhttp.responseText);
-      var response = JSON.parse(xhttp.responseText);
       document.getElementById("getprojects").innerHTML = response.length;
-    console.log(response);
+//contri
+      var xhttpC = new XMLHttpRequest();
+      xhttpC.open("GET", "/getProjectContributorsCount", false);
+      xhttpC.setRequestHeader("Content-type", "application/json");
+      xhttpC.send();
+      var responseC = JSON.parse(xhttpC.responseText);
+      console.log("here "+responseC);
+      document.getElementById("getC").innerHTML = responseC.length;
+
+//test cases
+      var xhttpT = new XMLHttpRequest();
+      xhttpT.open("GET", "/getProjectTestCount", false);
+      xhttpT.setRequestHeader("Content-type", "application/json");
+      xhttpT.send();
+      var responseT = JSON.parse(xhttpT.responseText);
+      console.log("here "+responseT);
+      document.getElementById("getT").innerHTML = responseT.length;
+
+      //tags
+      var xhttpTag = new XMLHttpRequest();
+      xhttpTag.open("GET", "/getAllProjectTags", false);
+      xhttpTag.setRequestHeader("Content-type", "application/json");
+      xhttpTag.send();
+      var responseTag = JSON.parse(xhttpTag.responseText);
+      console.log("here "+responseTag);
+      document.getElementById("getTag").innerHTML = responseTag.length;
+
 //    $(function () {
       $('#table').bootstrapTable({
         data: response
@@ -221,7 +246,7 @@
                             <a href="#">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <!--<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>-->
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
@@ -235,7 +260,7 @@
                                         <i class="fa fa-cube fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">12</div>
+                                        <div class="huge" id="getC">12</div>
                                         <div>Contributors!</div>
                                     </div>
                                 </div>
@@ -257,7 +282,7 @@
                                         <i class="fa fa-steam-square fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">124</div>
+                                        <div class="huge" id="getT">124</div>
                                         <div>Test Cases!</div>
                                     </div>
                                 </div>
@@ -279,7 +304,7 @@
                                         <i class="fa fa-bookmark-o fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">13</div>
+                                        <div class="huge" id="getTag">13</div>
                                         <div>Tags!</div>
                                     </div>
                                 </div>
@@ -296,7 +321,7 @@
                 </div>
                 <!-- /.row -->
 
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -307,7 +332,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!-- /.row -->
 
                 <div class="row">

@@ -12,11 +12,39 @@
 
 </head>
 <script type="text/javascript">
-    function UserAction() {
-        console.log('ZZZZZZZZZZZZZZZZZZZZZZz');
+    function checkLogin() {
+        var pass= document.getElementById("password").value;
+        var email= document.getElementById("email").value;
+        alert(pass + email);
         var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", "/dashboard", true);
-        xhttp.send();
+        xhttp.open("POST", "/login", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        var json = {
+            "email":email,
+            "password":pass
+        };
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == XMLHttpRequest.DONE) {
+                alert(xhttp.responseText);
+                var e = JSON.parse(xhttp.responseText)
+                if(e.val === true){
+                    document.getElementsByName("loginForm").submit();
+                }else{
+                    alert("Credentials does not match!!");
+                }
+            }
+        }
+
+        xhttp.send(JSON.stringify(json));
+//        xhttp.send(json);
+//        var response = JSON.parse(xhttp.responseText);
+
+       alert("here "+xhttp.responseText);
+
+//        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+//        xmlhttp.open("POST", "/json-handler");
+//        xmlhttp.setRequestHeader("Content-Type", "application/json");
+//        xmlhttp.send(JSON.stringify({name:"John Rambo", time:"2pm"}));
     }
 </script>
 <body>
@@ -72,25 +100,25 @@
         <div id="login">
             <h1>Welcome Back!</h1>
 
-            <form action="/dashboard">
+            <form action="dashboard" id="loginForm" name="loginForm">
 
                 <div class="field-wrap">
                     <label>
                         Email Address<span class="req">*</span>
                     </label>
-                    <input type="email"required autocomplete="off"/>
+                    <input type="email"required autocomplete="off" id="email"/>
                 </div>
 
                 <div class="field-wrap">
                     <label>
                         Password<span class="req">*</span>
                     </label>
-                    <input type="password"required autocomplete="off"/>
+                    <input type="password"required autocomplete="off" id="password"/>
                 </div>
 
                 <p class="forgot"><a href="#">Forgot Password?</a></p>
 
-                <button class="button button-block" onClick="UserAction()"/>Log In</button>
+                <button class="button button-block" onClick="checkLogin()"/>Log In</button>
 
             </form>
 
