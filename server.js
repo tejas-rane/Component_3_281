@@ -33,7 +33,7 @@ app.post('/getProject', projects.getProject)
 app.post('/getProjectMonitoring', projects.getProjectMonitoring)
 app.post('/getProjectTags', projects.getProjectTags)
 app.post('/updateProject', projects.updateProject)
-app.post('/projectslist', projects.getAllProjectsForlist)
+app.get('/projectslist', projects.getAllProjectsForlist)
 
 // test cases
 app.post('/getProjectTests', projects.getProjectTest)

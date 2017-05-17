@@ -241,7 +241,7 @@
                             },
                             componentDidMount: function() {
                                 //this.serverRequest = $.get('/json/data.json', function(result) {
-                                this.serverRequest = $.get('http://localhost:3000/projects', function (result) {
+                                this.serverRequest = $.get('http://localhost:3000/projectslist', function (result) {
                                     var tempApts = result;
                                     this.setState({
                                         myData: tempApts
@@ -261,26 +261,52 @@
                                                     <table id="table" data-height="1800" width="800">
                                                         <thead>
                                                             <tr>
-                                                                <td className="pet-name" data-height="200" data-field="title" width="250"> <div>Title:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{this.state.myData[index].title}</div></td>
+                                                                <td className="pet-name" data-height="200" data-field="title" width="250"> Title:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</td>
+                                                                    <td className="label-item">    {this.state.myData[index].title}
+                                                                    </td>
+
                                                             </tr>
                                                             <tr>
                                                                 <br />
                                                             </tr>
                                                             <tr>
-                                                                <td className="pet-name" data-height="200" data-field="title" width="250"> <div>Description:&ensp;{this.state.myData[index].description}</div></td>
+                                                                <td className="pet-name" data-height="200" data-field="title" width="250">Description:&ensp;</td>
+                                                                <td><div className="label-item">{this.state.myData[index].description}</div></td>
                                                             </tr>
                                                             <tr>
                                                                 <br />
                                                             </tr>
                                                             <tr>
-                                                                <td className="pet-name" data-height="200" data-field="title" width="250"> <div>URL:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{this.state.myData[index].URL}</div></td>
+                                                                <td className="pet-name" data-height="200" data-field="title" width="250"> Start:&ensp;</td>
+                                                                 <td>   <div className="label-item">{this.state.myData[index].creation_date.substr(0,10)}</div></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="pet-name" data-height="200" data-field="title" width="250"> End:&ensp;</td>
+                                                                    <td>    <div className="label-item">{this.state.myData[index].dead_date.substr(0,10)}</div></td>
+
                                                             </tr>
                                                             <tr>
                                                                 <br />
                                                             </tr>
                                                             <tr>
-                                                                <td className="pet-name" data-height="200" data-field="title" width="250"> <div>Manager:&ensp;&ensp;&ensp;&ensp;{this.state.myData[index].ManagerName}</div></td>
+                                                                <td className="pet-name" data-height="200" data-field="title" width="250">URL:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; </td>
+                                                                <td> <div className="label-item">{this.state.myData[index].url}</div></td>
                                                             </tr>
+                                                            <tr>
+                                                                <br />
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="pet-name" data-height="200" data-field="title" width="250">Manager:&ensp;&ensp;&ensp;&ensp;</td>
+                                                                  <td>  <div className="label-item">{this.state.myData[index].ManagerName}</div></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <br />
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="pet-name" data-height="200" data-field="title" width="250">Cases:&ensp;&ensp;&ensp;&ensp;</td>
+                                                                <td><div className="label-item">{this.state.myData[index].case_name}</div></td>
+                                                            </tr>
+
                                                         </thead>
                                                     </table>
                                                 </div>
