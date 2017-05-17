@@ -43,7 +43,7 @@
                     document.forms["signUpForm"].reset();
                     //document.getElementsByName("signUpForm").submit();
                 }else{
-                    //alert("You are successfully registered! \n Pleas Login to proceed.");
+                    alert("You are successfully registered! \n Pleas Login to proceed.");
                 }
             }
             //sleep(1000);
@@ -131,7 +131,7 @@
                     <input type="password"required autocomplete="off" id="passSignup"/>
                 </div>
 
-                <button  class="button button-block" onclick="registerUser()" />Get Started</button>
+                <button  class="button button-block" onclick="registerUser()" onsubmit="alert('You are successfully registered! \n Please Login to proceed.')";/>Get Started</button>
 
             </form>
 
