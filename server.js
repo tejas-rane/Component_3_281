@@ -53,6 +53,7 @@ app.get('/getProjectContributorsCount', projects.getContributorCount)
 
 //login
 app.post('/login', register.login)
+app.post('/register', register.registerUser)
 
 
 

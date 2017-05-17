@@ -316,7 +316,7 @@ getAllProjectsForlist = function(req, res){
         +"inner join test_5 as test on test.pid=p.pid "
         +"inner join project_monitoring as pm on p.pid= pm.pid "
         +"inner join project_tags_map_4 as tm on tm.pid = p.pid "
-        +"inner join tags_3 as tags on tags.tid = tm.tid  "; // prepare query
+        +"inner join tags_3 as tags on tags.tid = tm.tid group by p.pid "; // prepare query
     mysql.fetchQuery(query, function (err, rows) {
         if(err){
             console.log('Couldnt execute Query : '+ query);

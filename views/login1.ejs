@@ -12,10 +12,51 @@
 
 </head>
 <script type="text/javascript">
+    function registerUser(){
+
+        var fname= document.getElementById("fname").value;
+        var lname= document.getElementById("lname").value;
+        var email= document.getElementById("emailSignup").value;
+        var pass= document.getElementById("passSignup").value;
+        var managerName = fname + " "+ lname;
+        //alert("here " +managerName + email + pass);
+        var details = {
+            email: email,
+            password: pass,
+            managerName:  managerName
+        };
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/register", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+
+
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == XMLHttpRequest.DONE) {
+                //alert(xhttp.responseText);
+                var e = JSON.parse(xhttp.responseText)
+                if(e.val === true){
+                    //sleep(1000);
+                    //alert("You are successfully registered! \n Pleas Login to proceed.");
+                    document.getElementById("signUpForm").action = "/";
+                    document.forms["signUpForm"].submit();
+                   // document.getElementById("signUpForm").getAttribute("fname").value = "";
+                    document.forms["signUpForm"].reset();
+                    //document.getElementsByName("signUpForm").submit();
+                }else{
+                    alert("You are successfully registered! \n Pleas Login to proceed.");
+                }
+            }
+            //sleep(1000);
+            alert("You are successfully registered! \n Please Login to proceed.");
+        }
+
+        xhttp.send(JSON.stringify(details));
+    }
+
     function checkLogin() {
         var pass= document.getElementById("password").value;
         var email= document.getElementById("email").value;
-        alert(pass + email);
+        //alert(pass + email);
         var xhttp = new XMLHttpRequest();
         xhttp.open("POST", "/login", true);
         xhttp.setRequestHeader("Content-type", "application/json");
@@ -25,26 +66,25 @@
         };
         xhttp.onreadystatechange = function() {
             if (xhttp.readyState == XMLHttpRequest.DONE) {
-                alert(xhttp.responseText);
+                //alert(xhttp.responseText);
                 var e = JSON.parse(xhttp.responseText)
                 if(e.val === true){
-                    document.getElementsByName("loginForm").submit();
+
+                    document.getElementById("loginForm").action = "/dashboard";
+                    document.forms["loginForm"].submit();
+                   // document.getElementsByName("loginForm").submit();
                 }else{
+
                     alert("Credentials does not match!!");
+                    document.getElementById("loginForm").action = "/";
+                    document.forms["loginForm"].submit();
+                   // document.getElementsByName("loginForm").submit();
                 }
             }
         }
 
         xhttp.send(JSON.stringify(json));
-//        xhttp.send(json);
-//        var response = JSON.parse(xhttp.responseText);
 
-       alert("here "+xhttp.responseText);
-
-//        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-//        xmlhttp.open("POST", "/json-handler");
-//        xmlhttp.setRequestHeader("Content-Type", "application/json");
-//        xmlhttp.send(JSON.stringify({name:"John Rambo", time:"2pm"}));
     }
 </script>
 <body>
@@ -59,21 +99,21 @@
         <div id="signup">
             <h1>Sign Up for Free</h1>
 
-            <form action="/" method="post">
+            <form action="#" name="signUpForm" id="signUpForm" >
 
                 <div class="top-row">
-                    <div class="field-wrap">
+                    <div class="field-wrap" >
                         <label>
                             First Name<span class="req">*</span>
                         </label>
-                        <input type="text" required autocomplete="off" />
+                        <input type="text" required autocomplete="off" id="fname"/>
                     </div>
 
                     <div class="field-wrap">
                         <label>
                             Last Name<span class="req">*</span>
                         </label>
-                        <input type="text"required autocomplete="off"/>
+                        <input type="text"required autocomplete="off" id="lname"/>
                     </div>
                 </div>
 
@@ -81,17 +121,17 @@
                     <label>
                         Email Address<span class="req">*</span>
                     </label>
-                    <input type="email"required autocomplete="off"/>
+                    <input type="email"required autocomplete="off" id="emailSignup"/>
                 </div>
 
                 <div class="field-wrap">
                     <label>
                         Set A Password<span class="req">*</span>
                     </label>
-                    <input type="password"required autocomplete="off"/>
+                    <input type="password"required autocomplete="off" id="passSignup"/>
                 </div>
 
-                <button type="submit" class="button button-block"/>Get Started</button>
+                <button  class="button button-block" onclick="registerUser()"/>Get Started</button>
 
             </form>
 
@@ -100,7 +140,7 @@
         <div id="login">
             <h1>Welcome Back!</h1>
 
-            <form action="dashboard" id="loginForm" name="loginForm">
+            <form  action="#" id="loginForm"  name="loginForm">
 
                 <div class="field-wrap">
                     <label>

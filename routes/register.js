@@ -59,31 +59,32 @@ login = function(req, res) {
     });
 };
 registerUser = function(req, res) {
-
     var details = {
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        managerName:  req.body.managerName
     };
     detailsStr = JSON.stringify(details)
     console.log('log in details : ' + detailsStr);
-    connection.connect(function (err) {
+    var query = "INSERT into Managers_1  set ?"; // prepare query
+    mysql.putDataQuery(query, details, function (err, rows) {
         if(err){
-            console.log('Could not Connect to DB');
+            console.log('Couldnt execute Query : '+ query);
             console.log(err);
             return;
         }
-        var query = "INSERT into Managers_1  set ?"; // prepare query
-        connection.query(query, details, function (err, rows) {
-            if(err){
-                console.log('Could not execute Query : '+ query);
-                console.log(err);
-                return;
-            }
-            console.log('Query Successfully executed : '+query);
-            res.sendStatus(201);
-        });
-        connection.end();
+        console.log('Query Successfully executed : '+query);
+        var resp;
+        if(rows.length == 1){
+            resp = {val: true};
+        }
+        else {
+            resp = {val: false};
+            // send back the projects
+        }
+        res.send(resp);
     });
+
 };
 getAllUsers = function(req, res){
     // connect to database
