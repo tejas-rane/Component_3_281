@@ -12,7 +12,11 @@ exports.dashboard= function(req, res){
     title:'Express'
   })
 }
-
+exports.charts= function(req, res){
+    res.render('Charts',{
+        title:'Express'
+    })
+}
 
 exports.projectlist= function(req, res){
   res.render('projectlist',{
