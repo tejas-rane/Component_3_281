@@ -19,6 +19,7 @@ app.use(express.static(path.join(__dirname,'src')));//new
 
 
 app.get('/index',routes.index);
+app.get('/timeline',routes.timeline);
 app.get('/projectlist',routes.projectlist);
 app.get('/dashboard',routes.dashboard);
 app.get('/charts',routes.charts);
@@ -32,7 +33,7 @@ app.set('view engine','ejs');
 app.get('/projects', projects.getAllProjects)
 app.post('/projects', projects.addProject)
 app.post('/getProject', projects.getProject)
-app.post('/getProjectMonitoring', projects.getProjectMonitoring)
+app.get('/getProjectMonitoring', projects.getProjectMonitoring)
 app.post('/getProjectTags', projects.getProjectTags)
 app.post('/updateProject', projects.updateProject)
 app.get('/projectslist', projects.getAllProjectsForlist)

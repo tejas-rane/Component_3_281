@@ -7,6 +7,13 @@ exports.index = function(req, res){
     })
 }
 
+exports.timeline = function(req, res){
+    res.render('timeline',{
+        title:'Express'
+    })
+}
+
+
 exports.dashboard= function(req, res){
   res.render('dashboard',{
     title:'Express'

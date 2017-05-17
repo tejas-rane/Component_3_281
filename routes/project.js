@@ -108,7 +108,8 @@ updateProject = function(req, res) {
 
 getProjectMonitoring = function(req, res){
   var pid = req.body.pid;
-  var query = 'select * from Project_Monitoring where pid = "' + pid + '" order by event_date desc'; // prepare query
+  // var query = 'select * from Project_Monitoring where pid = "' + pid + '" order by event_date desc'; // prepare query
+    var query = 'select * from Project_Monitoring  order by event_date desc'; // prepare query
   mysql.fetchQuery(query, function (err, rows) {
     if(err){
       console.log('Couldnt execute Query : '+ query);
