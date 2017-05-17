@@ -68,14 +68,38 @@ $(function() {
     Morris.Donut({
         element: 'morris-donut-chart',
         data: [{
-            label: "Download Sales",
-            value: 12
+            label: "Tags",
+            value: function () {
+                var xhttpTag = new XMLHttpRequest();
+                xhttpTag.open("GET", "/getAllProjectTags", false);
+                xhttpTag.setRequestHeader("Content-type", "application/json");
+                xhttpTag.send();
+                var responseTag = JSON.parse(xhttpTag.responseText);
+                console.log("here "+responseTag);
+                return parseInt(responseTag.length);
+            }()
         }, {
-            label: "In-Store Sales",
-            value: 30
+            label: "Contributors",
+            value: function () {
+                var xhttpC = new XMLHttpRequest();
+                xhttpC.open("GET", "/getProjectContributorsCount", false);
+                xhttpC.setRequestHeader("Content-type", "application/json");
+                xhttpC.send();
+                var responseC = JSON.parse(xhttpC.responseText);
+                console.log("here "+responseC);
+                return parseInt(responseC.length);
+            }()
         }, {
-            label: "Mail-Order Sales",
-            value: 20
+            label: "Test Cases",
+            value: function () {
+                var xhttpT = new XMLHttpRequest();
+                xhttpT.open("GET", "/getProjectTestCount", false);
+                xhttpT.setRequestHeader("Content-type", "application/json");
+                xhttpT.send();
+                var responseT = JSON.parse(xhttpT.responseText);
+                console.log("here "+responseT);
+                return parseInt(responseT.length);
+            }()
         }],
         resize: true
     });
