@@ -262,7 +262,7 @@ getContributor = function(req, res){
 getContributorCount = function(req, res){
     console.log("here");
     var pid = req.body.pid;
-    var query = 'select * from Project_Contributors ';
+    var query = 'select * from managers_1 ';
     mysql.fetchQuery(query, function (err, rows) {
         if(err){
             console.log('Couldnt execute Query : '+ query);
